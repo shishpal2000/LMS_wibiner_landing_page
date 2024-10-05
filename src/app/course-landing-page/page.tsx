@@ -20,7 +20,7 @@ const Page = () => {
         <Highlights />
         <ElementaSchool />
         <FAQs />
-        <div className="fixed bottom-0 left-0 w-full h-fit bg-gradient-to-tr from-purple-100 via-orange-100 to-purple-100 flex md:hidden p-[5%] items-center">
+        <div className="fixed bottom-0 left-0 w-full h-fit bg-gradient-to-tr from-purple-100 via-orange-100 to-purple-100 flex md:hidden p-[5%] items-center gap-5">
           <div className="w-1/2 flex flex-col gap-4">
             {/* <div className="flex items-end gap-1.5 w-[90%]">
               <p className="text-2xl text-[#525FE1] font-semibold">

@@ -9,7 +9,7 @@ import HeroSection from "./HeroSection";
 const Page = () => {
   return (
     <div className="container">
-      <div className="w-full flex flex-col pt-[85px] overflow-hidden relative">
+      <div className="w-full flex flex-col pb-[55px] overflow-hidden relative">
         <HeroSection />
         <Advantages />
         <SyllabusCurriculum />
