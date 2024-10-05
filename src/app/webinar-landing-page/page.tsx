@@ -5,15 +5,21 @@ import ElementaSchool from "../course-landing-page/ElementaSchool";
 import FAQs from "../course-landing-page/FAQs";
 import Advantages from "./Advantages";
 import HeroSection from "./HeroSection";
+import Tools from "../components/Tools/Tools";
+import GetCertified from "../components/GetCerftified/GetCertified";
+import Webinardetails from "./Webinardetails";
 
 const Page = () => {
   return (
     <div className="container">
       <div className="w-full flex flex-col pb-[55px] overflow-hidden relative">
         <HeroSection />
+        <Webinardetails/>
         <Advantages />
         <SyllabusCurriculum />
         <WhoseItFor />
+        <GetCertified/>
+        <Tools />
         <ElementaSchool />
         <FAQs />
         <div className="fixed bottom-0 left-0 w-full h-fit bg-gradient-to-tr from-purple-100 via-orange-100 to-purple-100 flex mm:hidden p-[5%] items-center">
