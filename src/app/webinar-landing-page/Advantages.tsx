@@ -26,7 +26,7 @@ const Advantages = () => {
   ];
   return (
     <div className="container">
-      <div className="w-full py-[5%] flex flex-col md:flex-row gap-5 md:gap-0 mt-5 md:justify-between">
+      <div className="w-full  flex flex-col md:flex-row gap-5 md:gap-0  md:justify-between">
         <div className="w-full md:w-[35%] flex flex-col justify-between">
           <p className="text-3xl lg:text-4xl xl:text-5xl font-semibold text-center md:text-start" onClick={()=>setActive(1)}>
             Advantages of <br /> the Webinar

@@ -9,7 +9,7 @@ import person from "../../../public/bohemian-man-with-his-arms-crossed-Photoroom
 const Webinardetails = () => {
   return (
     <div className="container">
-      <div className="w-full flex flex-col md:flex-row-reverse bg-black p-[5%] py-[10%] rounded-md text-white gap-5 mt-[10%]">
+      <div className="w-full flex flex-col md:flex-row-reverse bg-black rounded-md text-white gap-5 px-[5%] py-[10%] md:py-[5%]">
         <div className="w-full md:w-1/2 flex flex-col gap-10">
           <div className="w-full h-full bg-white bg-opacity-10 rounded-md grid grid-cols-2 gap-2 p-[5%]">
             <div className="flex gap-2 items-center py-2 px-2 bg-white bg-opacity-15 rounded-md justify-center">

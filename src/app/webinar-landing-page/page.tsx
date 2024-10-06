@@ -8,17 +8,19 @@ import HeroSection from "./HeroSection";
 import Tools from "../components/Tools/Tools";
 import GetCertified from "../components/GetCerftified/GetCertified";
 import Webinardetails from "./Webinardetails";
+import Skills from "./Skills";
 
 const Page = () => {
   return (
     <div className="container">
-      <div className="w-full flex flex-col pb-[55px] overflow-hidden relative">
+      <div className="w-full flex flex-col pb-[55px] overflow-hidden relative gap-10 md:gap-14 xl:gap-16 mb-[60px] md:mb-0">
         <HeroSection />
-        <Webinardetails/>
+        <Webinardetails />
+        <Skills />
         <Advantages />
         <SyllabusCurriculum />
         <WhoseItFor />
-        <GetCertified/>
+        <GetCertified />
         <Tools />
         <ElementaSchool />
         <FAQs />
@@ -32,8 +34,6 @@ const Page = () => {
                 </span>{" "}
                 <span className="text-sm text-[#525FE1] mb-0">85% OFF</span>
               </p>
-              {/* <span className="line-through text-base text-[#525FE1]">₹3999</span> */}
-              {/* <span className="text-sm text-[#525FE1]">85% OFF</span> */}
             </div>
             <div className="text-sm">DeadLine September 26, 2024</div>
           </div>
