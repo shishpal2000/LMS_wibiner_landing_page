@@ -15,16 +15,16 @@ const Tools = () => {
     <div className="container">
       <div className="w-full flex flex-col gap-5  items-center">
         <p className="text-4xl md:text-5xl lg:text-6xl font-semibold">Tools you will learn</p>
-        <div className="w-full grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
-          <Image src={tool1} alt="" className="w-full object-cover" />
-          <Image src={tool2} alt="" className="w-full object-cover" />
-          <Image src={tool3} alt="" className="w-full object-cover" />
-          <Image src={tool4} alt="" className="w-full object-cover" />
-          <Image src={tool5} alt="" className="w-full object-cover" />
-          <Image src={tool6} alt="" className="w-full object-cover" />
-          <Image src={tool7} alt="" className="w-full object-cover" />
-          <Image src={tool8} alt="" className="w-full object-cover" />
-          <Image src={tool9} alt="" className="w-full object-cover" />
+        <div className="w-full flex gap-8 flex-wrap">
+          <Image src={tool1} alt="" className="w-[100px] h-auto object-cover "  />
+          <Image src={tool2} alt="" className="w-[100px] h-auto  object-cover" />
+          <Image src={tool3} alt="" className="w-[100px] h-auto  object-cover" />
+          <Image src={tool4} alt="" className="w-[100px] h-auto  object-cover" />
+          <Image src={tool5} alt="" className="w-[100px] h-auto object-cover" />
+          <Image src={tool6} alt="" className="w-[100px] h-auto object-cover" />
+          <Image src={tool7} alt="" className="w-[100px] h-auto object-cover" />
+          <Image src={tool8} alt="" className="w-[100px] h-auto object-cover" />
+          <Image src={tool9} alt="" className="w-[100px] h-auto object-cover" />
         </div>
       </div>
     </div>

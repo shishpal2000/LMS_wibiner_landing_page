@@ -8,7 +8,7 @@ const GetCertified = () => {
   return (
     <div className="container">
       <div className="w-full flex flex-col items-center gap-5  md:py-0">
-        <p className="text-4xl md:text-5xl lg:text-6xl font-semibold">
+        <p className="text-2xl md:text-4xl lg:text-6xl font-semibold">
           Get Certified
         </p>
         <p className="text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-center">
@@ -25,7 +25,7 @@ const GetCertified = () => {
                 <TiStarburst />
               </div>
               <div className="w-full flex flex-col">
-                <p className="text-xl md:text-2xl lg:text-3xl font-medium text-primary">
+                <p className="text-xl  font-medium text-primary">
                   Official and Verified:
                 </p>
                 <p>
@@ -40,7 +40,7 @@ const GetCertified = () => {
                 <IoArrowRedoSharp />
               </div>
               <div className="w-full flex flex-col">
-                <p className="text-xl md:text-2xl lg:text-3xl font-medium text-primary">
+                <p className="text-xl  font-medium text-primary">
                   Easily Shareable:
                 </p>
                 <p>
@@ -55,7 +55,7 @@ const GetCertified = () => {
                 <IoPerson />
               </div>
               <div className="w-full flex flex-col">
-                <p className="text-xl md:text-2xl lg:text-3xl font-medium text-primary">
+                <p className="text-xl  font-medium text-primary">
                   Enhances Credibility:
                 </p>
                 <p>

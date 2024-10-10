@@ -9,32 +9,32 @@ const WhoseItFor = () => {
     [
       <FaFileInvoice key={1} />,
       "Aspiring entrepreneurs",
-      "Simple and secure control of your organization's financial and legal transactions. Send customized invoices and contracts",
+      // "Simple and secure control of your organization's financial and legal transactions. Send customized invoices and contracts",
     ],
     [
       <SlCalender key={2} />,
       "Students and graduates",
-      "Schedule and reserve classrooms at one campus or multiple campuses. Keep detailed records of student attendance",
+      // "Schedule and reserve classrooms at one campus or multiple campuses. Keep detailed records of student attendance",
     ],
     [
       <HiUserGroup key={3} />,
       "Small business owners",
-      "Automate and track emails to individuals or groups. Skilline’s built-in system helps organize your organization ",
+      // "Automate and track emails to individuals or groups. Skilline’s built-in system helps organize your organization ",
     ],
     [
       <FaFileInvoice key={4} />,
       "Aspiring entrepreneurs",
-      "Simple and secure control of your organization's financial and legal transactions. Send customized invoices and contracts",
+      // "Simple and secure control of your organization's financial and legal transactions. Send customized invoices and contracts",
     ],
     [
       <SlCalender key={5} />,
       "Students and graduates",
-      "Schedule and reserve classrooms at one campus or multiple campuses. Keep detailed records of student attendance",
+      // "Schedule and reserve classrooms at one campus or multiple campuses. Keep detailed records of student attendance",
     ],
     [
       <HiUserGroup key={6} />,
       "Small business owners",
-      "Automate and track emails to individuals or groups. Skilline's built-in system helps organize your organization ",
+      // "Automate and track emails to individuals or groups. Skilline's built-in system helps organize your organization ",
     ],
   ];
   return (
@@ -52,7 +52,7 @@ const WhoseItFor = () => {
             <ReasonCard
               heading={reason[1]}
               info={reason[2]}
-              icon={reason[0]}
+              // icon={reason[0]}
               key={index}
             />
           ))}
