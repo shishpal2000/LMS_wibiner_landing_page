@@ -5,6 +5,7 @@ import heroImage from "../../../public/courselandingpagebanneromage.png";
 import logo from "../../../public/NavbarBrand.png";
 import group from "../../../public/Group.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import Link from "next/link";
 
 const HeroSection1 = () => {
   return (
@@ -39,7 +40,7 @@ const HeroSection1 = () => {
               </p>
             </div>
             <p className="hidden md:block text-gray-700 text-[11px] mm:Text-xs md:text-sm lg:text-base xl:text-xl mt-[3%] font-semibold text-center md:text-start lg:pb-16 xl:pb-20">
-              16-Week Online Program | No Design Experience Required 
+              16-Week Online Program | No Design Experience Required
             </p>
           </div>
           <div className="hidden md:block absolute bottom-0 left-0 w-full p-[5%]">
@@ -72,12 +73,15 @@ const HeroSection1 = () => {
                   </p>
                 </div>
               </div>
-              <button className="w-fit h-fit p-1.5 md:p-2 lg:p-2.5 xl:p-3 gap-3 md:gap-4 lg:gap-5 xl:gap-6 flex items-center rounded-full bg-white text-black justify-between">
+              <Link
+                href={`/loginpage`}
+                className="w-fit h-fit p-1.5 md:p-2 lg:p-2.5 xl:p-3 gap-3 md:gap-4 lg:gap-5 xl:gap-6 flex items-center rounded-full bg-white text-black justify-between"
+              >
                 <p className="ml-2 text-xs lg:text-base xl:text-xl 2xl:text-3xl font-medium">
                   Book Now
                 </p>
                 <MdKeyboardArrowRight className="lg:w-10 xl:w-12 2xl:w-14 lg:h-10 xl:h-12 2xl:h-14 bg-black text-white lg:p-2 xl:p-3 2xl:p-4 rounded-full" />
-              </button>
+              </Link>
             </div>
           </div>
           <div className="hidden md:block w-[44%] overflow-hidden">
