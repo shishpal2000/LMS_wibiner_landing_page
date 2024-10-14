@@ -1,6 +1,8 @@
 "use client";
+import Link from "next/link";
 
 import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
 
 type QuestionType = "multiple-choice" | "short-answer" | "long-answer";
 
@@ -67,6 +69,22 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-2xl w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
+        <div className="flex justify-between items-center">
+          <div>
+            <img
+              src="/placeholder.svg?height=40&width=120"
+              alt="Company Logo"
+              className="h-10 w-30"
+            />
+          </div>
+          <Link
+            href={`/`}
+            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            <span>Back</span>
+          </Link>
+        </div>
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900">Login</h2>
           <p className="mt-2 text-sm text-gray-600">
@@ -138,7 +156,7 @@ export default function LoginForm() {
             {staticQuestions.map((question, index) => (
               <div
                 key={index}
-                className="p-4 border border-gray-600 rounded-md"
+                className="p-4 border border-gray-200 rounded-md"
               >
                 <h4 className="text-md font-medium text-gray-500 mb-2">
                   Question {index + 1}
