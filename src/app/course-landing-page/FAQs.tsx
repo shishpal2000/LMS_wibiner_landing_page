@@ -15,6 +15,10 @@ const FAQs: React.FC<FAQsProps> = ({ title, description, content }) => {
   //   description,
   //   content,
   // });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+ 
 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
@@ -58,7 +62,55 @@ const FAQs: React.FC<FAQsProps> = ({ title, description, content }) => {
           ) : (
             <div>No FAQ content available</div>
           )}
+
+<div className="w-full md:w-[100%] flex flex-col p-[3%] gap-3 bg-gray-100 rounded-md h-fit">
+            <p className="font-semibold text-base xl:text-xl py-2">
+              ASK YOUR QUESTION
+            </p>
+            <hr />
+            <div className="w-full flex flex-col gap-1">
+              <p className="text-xs lg:text-sm xl:text-base">Name</p>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name ..."
+                className="p-3 text-[10px] lg:text-xs xl:text-sm"
+              />
+            </div>
+            <div className="w-full flex flex-col gap-1">
+              <p className="text-xs lg:text-xs xl:text-sm">Email</p>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email ..."
+                className="p-3 text-[10px] lg:text-xs xl:text-sm"
+              />
+            </div>
+            <div className="w-full flex flex-col gap-1">
+              <p className="text-xs lg:text-xs xl:text-sm">Mobile Number</p>
+              <input
+                type="text"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                placeholder="Enter your mobile number ..."
+                className="p-3 text-[10px] lg:text-xs xl:text-sm"
+              />
+            </div>
+            <p className="text-sm md:text-base text-gray-400">
+              By clicking Submit, I authorize Vstudyonline Team to Call me,
+              receive SMS/Messages about its products & offers. This consent
+              will override any registration for DNC/ NDNC
+            </p>
+            <button className="w-full rounded bg-[#525FE1] text-white py-2 xl:py-3 text-xs mt-1">
+              SUBMIT
+            </button>
+          </div>
+
+          
         </div>
+       
       </div>
     </div>
   );

@@ -1,17 +1,16 @@
 "use client";
-import React, { Suspense } from "react";
-import LoginPage  from "../components/Loginpage/LoginPage";
+import React, {Suspense } from "react";
+import PaymentFail from '../components/PaymntFail/PaymentFail';
 
 const Page = () => {
-
+  
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-      <LoginPage />
+      <PaymentFail />
       </Suspense>
     </div>
   );
 };
-
 
 export default Page;

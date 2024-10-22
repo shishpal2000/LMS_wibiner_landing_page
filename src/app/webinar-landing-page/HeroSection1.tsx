@@ -6,6 +6,14 @@ import Link from "next/link";
 
 // Define the structure of the item
 interface HeroItem {
+  event_id: {
+    _id: string;
+    is_paid: boolean;
+    event_id?: string;
+    price: {
+      amount: number;
+    }
+  };
   event_logo: string;
   tag_line: string;
   title: string;
@@ -24,10 +32,23 @@ interface HeroSection1Props {
 
 const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
   const formatDate = (dateString: string) => {
+    // Check if dateString is valid
+    if (!dateString) {
+      console.error("Invalid date string:", dateString);
+      return "Invalid date"; // Handle the case for invalid dates
+    }
+
     const eventDate = new Date(dateString);
+    
+    // Check if the date is valid
+    if (isNaN(eventDate.getTime())) {
+      console.error("Invalid date value:", dateString);
+      return "Invalid date"; // Handle the case for invalid dates
+    }
+
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
-      month: "long", // or "short" for abbreviated month
+      month: "long", 
       day: "numeric",
     }).format(eventDate);
   };
@@ -61,7 +82,10 @@ const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
                   {/*  */}
                   <p className="hidden md:block text-gray-700 text-[11px] mm:text-xs md:text-sm lg:text-base xl:text-xl mt-[3%] font-semibold text-center md:text-start lg:pb-16 xl:pb-20">
                     {item.title}
+                    <br/>
+                    <p className="text-xl mb-2">₹ {item?.event_id.price.amount}</p>
                   </p>
+                
                 </div>
                 <div className={` absolute bottom-0 left-0 w-full p-[5%] `}>
                   <div className="w-full bg-[#525FE1] flex px-[5%] py-[2%] lg:rounded-2xl xl:rounded-[32px] 2xl:rounded-[48px] 2xl:mt-10 justify-between items-center">
@@ -92,7 +116,7 @@ const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
                       </div>
                     </div>
                     <Link
-                      href={`/loginpage`}
+                      href={`/loginpage?event_id=${item.event_id?._id}&price=${item.event_id?.price?.amount}&is_paid=${item.event_id?.is_paid}`}
                       className="w-fit h-fit p-1.5 md:p-2 lg:p-2.5 xl:p-3 gap-3 md:gap-4 lg:gap-5 xl:gap-6 flex items-center rounded-full bg-white text-black justify-between"
                     >
                       <p className="ml-2 text-xs lg:text-base xl:text-xl 2xl:text-3xl font-medium">

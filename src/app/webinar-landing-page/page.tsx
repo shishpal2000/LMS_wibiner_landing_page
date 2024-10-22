@@ -89,6 +89,14 @@ interface InstructorDetails {
 
 // WebinarData Structure
 interface WebinarData {
+  event_id: {
+    _id: string;
+    event_id?: string;
+    is_paid: boolean;
+    price: {
+      amount: number;
+    }
+  };
   event_logo: string;
   tag_line: string;
   title: string;
@@ -169,7 +177,7 @@ const Page: React.FC = () => {
     <div className="container">
       <div className="w-full flex flex-col pb-[55px] overflow-hidden relative gap-10 md:gap-14 xl:gap-16 mb-[60px] md:mb-0">
         {/* Pass the first item in the data array to HeroSection1 */}
-        <HeroSection1 data={data || {}} />
+        <HeroSection1 data={data || {} } />
         <WhoseItFor
           for_whom_title={firstWebinar?.for_whom_title || "No title available"}
           for_whom_text={

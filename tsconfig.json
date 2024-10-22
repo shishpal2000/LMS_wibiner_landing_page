@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/course-landing-page/ReasonCard.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/course-landing-page/ReasonCard.jsx", "src/app/components/Loginpage/LoginPage.tsx"],
   "exclude": ["node_modules"]
 }
