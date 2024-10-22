@@ -167,85 +167,47 @@ export default function LoginForm (){
 
   const initiatePayment = (data: OtpInformation) => {
     console.log("Payment initiation data:", data);
-    // const options = {
-    //   key: "rzp_test_P6U4bVeKGpTrVw", // Replace with your Razorpay test/live key
-    //   amount: eventPrice * 100, // Amount in paise
-    //   currency: "INR",
-    //   name: "Webinars Payment",
-    //   description: "Payment for Webinar",
-    //   order_id: data?.razorpay_order_id, 
-    //   handler: function (response: RazorpayResponse) {
-    //     console.log("Payment response:", response);
-    //     if (response.razorpay_payment_id) {
-    //       const query = new URLSearchParams({
-    //         razorpay_payment_id: response.razorpay_payment_id,
-    //         razorPay_order_id: response.razorpay_order_id || "",
-    //         razorpay_signature: response.razorpay_signature || "",
-    //         event_purchase_id: data.event_purchase || "", // Event purchase ID
-    //         event_id: eventId, // Event ID from query
-    //       }).toString();
-  
-    //       router.push(`/paymentsuccessfull?${query}`);
-    //     } else {
-    //       console.error("Payment ID is missing in the response:", response);
-    //       router.push("/paymentFail");
-    //     }
-    //   },
-    //   theme: {
-    //     color: "#3399cc",
-    //   },
-    //   modal: {
-    //     ondismiss: function () {
-    //       router.push("/paymentFail");
-    //     },
-    //   },
-    // };
-  
+    
     const options = {
-      key: "rzp_test_P6U4bVeKGpTrVw", //rzp_test_PgdcAVbkK0t1Ue
-      amount: eventPrice * 100,
+      key: "rzp_test_P6U4bVeKGpTrVw", // Replace with your Razorpay test/live key
+      amount: eventPrice * 100, // Amount in paise
       currency: "INR",
       name: "VstudyOnline",
       description: "Payment for Webinar",
-      order_id: data?.razorpay_order_id, 
-      callback_url: "http://localhost:3001/paymentsuccessfull", 
+      order_id: data?.razorpay_order_id,
       theme: {
         color: "#F37254",
       },
-      handler: function (response:RazorpayResponse) {
-        fetch("event/enroll/verify-event-enrollment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            razorpay_order_id: response.razorpay_order_id,
+      handler: async function (response: RazorpayResponse) {
+        console.log("Payment response:", response);
+        if (response.razorpay_payment_id) {
+          // Construct the query parameters
+          const query = new URLSearchParams({
             razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-            event_purchase_id : data?.event_purchase,
-            event_id: eventId,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.status === "ok") {
-              window.location.href = "/paymentsuccessfull";
-            } else {
-             show_notification("Payment failed", "error")
-              router.push("/");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Error verifying payment");
-          });
+            razorpay_order_id: response.razorpay_order_id || "",
+            razorpay_signature: response.razorpay_signature || "",
+            event_purchase_id: data?.event_purchase || "", // Event purchase ID
+            event_id: eventId || "", // Event ID
+          }).toString();
+  
+          // Redirect to the success page with query parameters
+          router.push(`/paymentsuccessfull?${query}`);
+        } else {
+          console.error("Payment ID is missing in the response:", response);
+          router.push("/paymentFail");
+        }
+      },
+      modal: {
+        ondismiss: function () {
+          router.push("/paymentFail");
+        },
       },
     };
-
-
+  
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
+  
   
 
   useEffect(() => {

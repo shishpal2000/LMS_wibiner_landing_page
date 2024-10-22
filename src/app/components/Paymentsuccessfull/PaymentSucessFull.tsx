@@ -1,108 +1,79 @@
 "use client";
-import React from "react";
-import { show_notification } from "../../apiCollection/notification"
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { postData } from "../../apiCollection/apiCalling";
+import { show_notification } from "../../apiCollection/notification";
 
-// interface OtpVerify {
-//   razorPay_order_id: string | null;
-//   razorpay_payment_id: string | null;
-//   razorpay_signature: string | null;
-//   event_purchase_id: string | null;
-//   event_id: string | null;
-// }
+export default function PaymentSuccessPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-const PaymentSucessFull = () => {
-  // const searchParams = useSearchParams();
-  // const razorPay_order_id = searchParams.get("razorPay_order_id");
-  // const razorpay_payment_id = searchParams.get("razorpay_payment_id");
-  // const razorpay_signature = searchParams.get("razorpay_signature");
-  // const event_purchase_id = searchParams.get("event_purchase_id");
-  // const event_id = searchParams.get("event_id");
+  const [isVerified, setIsVerified] = useState(false); // State to track if payment is verified
+  const [notificationShown, setNotificationShown] = useState(false); // State to track if notification has been shown
 
-  // useEffect(() => {
-  //   const verifyPayment = async () => {
-  //     const payload: OtpVerify = {
-  //       razorPay_order_id,
-  //       razorpay_payment_id,
-  //       razorpay_signature,
-  //       event_purchase_id,
-  //       event_id,
-  //     };
+  const razorpay_payment_id = searchParams.get("razorpay_payment_id");
+  const razorpay_order_id = searchParams.get("razorpay_order_id");
+  const razorpay_signature = searchParams.get("razorpay_signature");
+  const event_purchase_id = searchParams.get("event_purchase_id");
+  const event_id = searchParams.get("event_id");
 
-  //     const apiCall = await postData("event/enroll/verify-event-enrollment", payload);
+  useEffect(() => {
+    const verifyPayment = async () => {
+      // Only proceed if payment hasn't been verified yet
+      if (isVerified) return; 
 
-  //     if (apiCall) {
-  //       if (apiCall.success) {
-  //         show_notification("Payment successful!", "success");
-  //       } else {
-  //         show_notification("Error", apiCall.message);
-  //       }
-  //     }
-  //   };
+      if (razorpay_payment_id && razorpay_order_id && razorpay_signature) {
+        const payload = {
+          razorPay_order_id: razorpay_order_id,
+          razorpay_payment_id: razorpay_payment_id,
+          razorpay_signature: razorpay_signature,
+          event_purchase_id: event_purchase_id,
+          event_id: event_id,
+        };
 
-  //   verifyPayment();
-  // }, [razorPay_order_id, razorpay_payment_id, razorpay_signature, event_purchase_id, event_id]); 
+        try {
+          const res = await postData("event/enroll/verify-event-enrollment", payload);
+          if (res?.success) { // Check for success
+            if (!notificationShown) {
+              show_notification("Payment verified successfully!", "success");
+              setNotificationShown(true); // Mark notification as shown
+            }
+            setIsVerified(true); // Mark as verified
+            router.push("/"); // Redirect to a success page or dashboard
+          } else {
+            if (!notificationShown) {
+              show_notification("Payment verification failed: " + res?.message, "error");
+              setNotificationShown(true); // Mark notification as shown
+            }
+            router.push("/paymentFail");
+          }
+        } catch (error) {
+          console.error("Error verifying payment:", error);
+          if (!notificationShown) {
+            show_notification("Error verifying payment", "error");
+            setNotificationShown(true); // Mark notification as shown
+          }
+          router.push("/");
+        }
+      } else {
+        if (!notificationShown) {
+          show_notification("Missing payment information.", "error");
+          setNotificationShown(true); // Mark notification as shown
+        }
+        router.push("/");
+      }
+    };
+
+    verifyPayment();
+  }, [isVerified, razorpay_payment_id, razorpay_order_id, razorpay_signature, event_purchase_id, event_id, router, notificationShown]); // Ensure dependencies are correct
 
   return (
-    <div>
-      <h1>Payment successful</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="max-w-md w-full text-center p-10 bg-white rounded-xl shadow-lg">
+        <h2 className="text-3xl font-extrabold text-gray-900">
+          Processing Payment...
+        </h2>
+      </div>
     </div>
   );
-};
-
-export default PaymentSucessFull;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-// import React, { useEffect, useState , Suspense } from "react";
-// import dynamic from 'next/dynamic';
-// const Paymentsuccessfull = dynamic(() => import('../../components/Paymentsuccessfull/PaymentSucessFull.tsx'), {
-//   ssr: false, 
-// });
-// import { useSearchParams } from "next/navigation";
-
-// const Page = () => {
-//   const searchParams = useSearchParams();
-//   const id = searchParams.get("event_id");
-//   const price = searchParams.get("price");
-
-//   const [eventId, setEventId] = useState<string>("");
-//   const [eventPrice, setEventPrice] = useState<number>(0);
- 
-//   useEffect(() => {
-//     if (id) {
-//       setEventId(id);
-//     }
-//     if (price) {
-//       const parsedPrice = Number(price);
-//       setEventPrice(parsedPrice);
-//     }
-//   }, [id, price]);
-
-//   return (
-//     <div>
-//       <Suspense fallback={<div>Loading...</div>}>
-//       <Paymentsuccessfull />
-//       </Suspense>
-//     </div>
-//   );
-// };
-
-// export default Page;
+}
