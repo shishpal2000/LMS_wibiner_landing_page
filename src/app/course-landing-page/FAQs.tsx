@@ -145,7 +145,7 @@ const FAQs: React.FC<FAQsProps> = ({ title, description, content, course_id }) =
                   <Field
                     name="query"
                     type="text"
-                    placeholder="Enter your query ..."
+                    placeholder="Enter your query at least 10 characters"
                     className="p-3 text-[10px] lg:text-xs xl:text-sm"
                   />
                   <ErrorMessage name="query" component="div" className="text-red-500 text-xs" />
