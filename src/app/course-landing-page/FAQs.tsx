@@ -2,25 +2,62 @@
 import React, { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
+import Loder from "../loder/Loder";
+import { show_notification } from "../apiCollection/notification";
+import { postData } from "../apiCollection/apiCalling";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface FAQsProps {
   title: string;
   description: string;
   content: Array<{ question: string; answer: string }>;
+  course_id: string; // New prop to include course_id
 }
 
-const FAQs: React.FC<FAQsProps> = ({ title, description, content }) => {
-  // console.log("FAQs Component - Received data:", {
-  //   title,
-  //   description,
-  //   content,
-  // });
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
- 
-
+const FAQs: React.FC<FAQsProps> = ({ title, description, content, course_id }) => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Validation schema for form
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email address").required("Email is required"),
+    number: Yup.string()
+      .matches(/^[0-9]+$/, "Mobile number must be digits")
+      .required("Mobile number is required"),
+    query: Yup.string().required("Query is required"),
+  });
+
+  // Form submission handler
+  const handleSubmit = async (values: { name: string; email: string; number: string; query: string }, { resetForm }: { resetForm: () => void }) => {
+    setLoading(true);
+    try {
+      const payload = {
+        name: values.name,
+        email: values.email,
+        phone: values.number,
+        query: values.query,
+        course_id,
+      };
+
+  
+
+      const response = await postData("connect-with-us/submit", payload);
+
+      if (response.success) {
+        show_notification("Query submitted successfully", "success");
+        resetForm(); 
+      } else {
+        show_notification("Failed to submit query", "error");
+      }
+    } catch (error) {
+      show_notification("Error submitting query", "error");
+    } finally {
+      setLoading(false);
+      
+    }
+  };
 
   return (
     <div className="container">
@@ -48,9 +85,7 @@ const FAQs: React.FC<FAQsProps> = ({ title, description, content }) => {
                   </div>
                   <div
                     className={`lg:text-xl xl:text-2xl p-1 h-fit rounded-full ${
-                      openFAQ === index
-                        ? "bg-[#525FE1] text-white"
-                        : "bg-purple-100"
+                      openFAQ === index ? "bg-[#525FE1] text-white" : "bg-purple-100"
                     }`}
                     onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
                   >
@@ -63,54 +98,77 @@ const FAQs: React.FC<FAQsProps> = ({ title, description, content }) => {
             <div>No FAQ content available</div>
           )}
 
-<div className="w-full md:w-[100%] flex flex-col p-[3%] gap-3 bg-gray-100 rounded-md h-fit">
-            <p className="font-semibold text-base xl:text-xl py-2">
-              ASK YOUR QUESTION
-            </p>
-            <hr />
-            <div className="w-full flex flex-col gap-1">
-              <p className="text-xs lg:text-sm xl:text-base">Name</p>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name ..."
-                className="p-3 text-[10px] lg:text-xs xl:text-sm"
-              />
-            </div>
-            <div className="w-full flex flex-col gap-1">
-              <p className="text-xs lg:text-xs xl:text-sm">Email</p>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email ..."
-                className="p-3 text-[10px] lg:text-xs xl:text-sm"
-              />
-            </div>
-            <div className="w-full flex flex-col gap-1">
-              <p className="text-xs lg:text-xs xl:text-sm">Mobile Number</p>
-              <input
-                type="text"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                placeholder="Enter your mobile number ..."
-                className="p-3 text-[10px] lg:text-xs xl:text-sm"
-              />
-            </div>
-            <p className="text-sm md:text-base text-gray-400">
-              By clicking Submit, I authorize Vstudyonline Team to Call me,
-              receive SMS/Messages about its products & offers. This consent
-              will override any registration for DNC/ NDNC
-            </p>
-            <button className="w-full rounded bg-[#525FE1] text-white py-2 xl:py-3 text-xs mt-1">
-              SUBMIT
-            </button>
-          </div>
+          {/* Formik form for query submission */}
+          <Formik
+            initialValues={{ name: "", email: "", number: "", query: "" }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form className="w-full md:w-[100%] flex flex-col p-[3%] gap-3 bg-gray-100 rounded-md h-fit mb-24 md:md-10 lg:mb-0">
+                <p className="font-semibold text-base xl:text-xl py-2">
+                  ASK YOUR QUESTION
+                </p>
+                <hr />
+                <div className="w-full flex flex-col gap-1">
+                  <p className="text-xs lg:text-sm xl:text-base">Name</p>
+                  <Field
+                    name="name"
+                    type="text"
+                    placeholder="Enter your name ..."
+                    className="p-3 text-[10px] lg:text-xs xl:text-sm"
+                  />
+                  <ErrorMessage name="name" component="div" className="text-red-500 text-xs" />
+                </div>
+                <div className="w-full flex flex-col gap-1">
+                  <p className="text-xs lg:text-xs xl:text-sm">Email</p>
+                  <Field
+                    name="email"
+                    type="text"
+                    placeholder="Enter your email ..."
+                    className="p-3 text-[10px] lg:text-xs xl:text-sm"
+                  />
+                  <ErrorMessage name="email" component="div" className="text-red-500 text-xs" />
+                </div>
+                <div className="w-full flex flex-col gap-1">
+                  <p className="text-xs lg:text-xs xl:text-sm">Mobile Number</p>
+                  <Field
+                    name="number"
+                    type="text"
+                    placeholder="Enter your mobile number ..."
+                    className="p-3 text-[10px] lg:text-xs xl:text-sm"
+                  />
+                  <ErrorMessage name="number" component="div" className="text-red-500 text-xs" />
+                </div>
+                <div className="w-full flex flex-col gap-1">
+                  <p className="text-xs lg:text-xs xl:text-sm">Enter Your Query</p>
+                  <Field
+                    name="query"
+                    type="text"
+                    placeholder="Enter your query ..."
+                    className="p-3 text-[10px] lg:text-xs xl:text-sm"
+                  />
+                  <ErrorMessage name="query" component="div" className="text-red-500 text-xs" />
+                </div>
 
-          
+                <button
+                  type="submit"
+                  disabled={isSubmitting || loading}
+                  className="w-full rounded bg-[#525FE1] text-white py-2 xl:py-3 text-xs mt-1"
+                >
+                 {loading ? (
+                            <div className="spinner">
+                              <Loder />
+                              <span>Submitting...</span>
+                            </div>
+                          ) : (
+                            "submit"
+                          )}
+                </button>
+              </Form>
+            )}
+          </Formik>
         </div>
-       
       </div>
     </div>
   );

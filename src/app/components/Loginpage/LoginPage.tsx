@@ -6,6 +6,7 @@ import { postData } from "../../apiCollection/apiCalling";
 import { show_notification } from "../../apiCollection/notification";
 import { useRouter } from "next/navigation"; 
 import { useSearchParams } from "next/navigation";
+import Loder from "../../loder/Loder";
 
 interface LoginPageProps {
   eventId: string;
@@ -50,9 +51,11 @@ export default function LoginForm (){
   const id = searchParams.get("event_id");
   const price = searchParams.get("price");
   const is_paid= searchParams.get("is_paid");
+  const icon_url= searchParams.get("icon_url");
  
   const [eventId, setEventId] = useState<string>("");
   const [eventPrice, setEventPrice] = useState<number>(0);
+  const [icon_Logo, setIconLogo] = useState<string>("");
   const [isPaidEvent, setIsPaidEvent] = useState<boolean>(false);
  
   useEffect(() => {
@@ -67,6 +70,9 @@ export default function LoginForm (){
       const eventBoolean = is_paid.toLowerCase() === 'true'; 
       setIsPaidEvent(eventBoolean);
     }
+    if(icon_url){
+      setIconLogo(icon_url);
+    }
   }, [id, price, is_paid]);
 
 
@@ -76,17 +82,18 @@ export default function LoginForm (){
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [loading,setLoading]=useState(false);
   const router = useRouter(); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
 
     // Ensure required fields are not empty
     if (!name.trim() || !email.trim() || !phoneNumber.trim()) {
       show_notification("Please fill in all fields.", "error");
       return;
     }
-
 
     const payload: DataSend = {
       event_id: eventId,
@@ -108,14 +115,19 @@ export default function LoginForm (){
           show_notification(apiCall.error || "Unknown error occurred.", "error",);
         }
       }
+
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.error("Error submitting form:", error);
       show_notification("Error", "An unexpected error occurred.");
     }
+    setLoading(false)
   };
 
   const handleOtpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
 
     if (!otp.trim()) {
       show_notification("Please enter the OTP.", "error");
@@ -151,9 +163,10 @@ export default function LoginForm (){
           show_notification(apiCall.error ?? "Unknown error occurred.", 'error');
         }
       }
+      setLoading(false)
     } catch (err) {
       let errorMessage = "Unknown error occurred.";
-
+      setLoading(false)
       // Type guard to check if `err` is an object and has the expected properties
       if (typeof err === "object" && err !== null && "response" in err) {
         const errorResponse = (err as { response: { data: { error: string } } }).response;
@@ -163,14 +176,14 @@ export default function LoginForm (){
       show_notification(errorMessage, 'error');
       
     }
+    setLoading(false)
   };
 
   const initiatePayment = (data: OtpInformation) => {
-    console.log("Payment initiation data:", data);
     
     const options = {
-      key: "rzp_test_P6U4bVeKGpTrVw", // Replace with your Razorpay test/live key
-      amount: eventPrice * 100, // Amount in paise
+      key: process.env.PAYERPAY_KEY,
+      amount: eventPrice * 100,
       currency: "INR",
       name: "VstudyOnline",
       description: "Payment for Webinar",
@@ -179,21 +192,21 @@ export default function LoginForm (){
         color: "#F37254",
       },
       handler: async function (response: RazorpayResponse) {
-        console.log("Payment response:", response);
+      
         if (response.razorpay_payment_id) {
-          // Construct the query parameters
+          
           const query = new URLSearchParams({
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id || "",
             razorpay_signature: response.razorpay_signature || "",
-            event_purchase_id: data?.event_purchase || "", // Event purchase ID
-            event_id: eventId || "", // Event ID
+            event_purchase_id: data?.event_purchase || "",
+            event_id: eventId || "", 
           }).toString();
   
-          // Redirect to the success page with query parameters
+        
           router.push(`/paymentsuccessfull?${query}`);
         } else {
-          console.error("Payment ID is missing in the response:", response);
+         
           router.push("/paymentFail");
         }
       },
@@ -215,7 +228,6 @@ export default function LoginForm (){
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
-
     return () => {
       document.body.removeChild(script);
     };
@@ -227,7 +239,7 @@ export default function LoginForm (){
         <div className="flex justify-between items-center">
           <div>
             <img
-              src="/placeholder.svg?height=40&width=120"
+              src={icon_Logo}
               alt="Company Logo"
               className="h-10 w-30"
             />
@@ -350,7 +362,14 @@ export default function LoginForm (){
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out"
             >
-              Submit
+              {loading ? (
+                            <div className="spinner">
+                              <Loder />
+                              <span>Submitting...</span>
+                            </div>
+                          ) : (
+                            "submit"
+                          )}
             </button>
           </div>
         </form>
@@ -359,23 +378,3 @@ export default function LoginForm (){
   );
 }
 
-
-// {
-//   "success": true,
-//   "message": "Guest Enrollment successful",
-//   "data": {
-//       "event_id": "670fa0d2b5b3cff1853c7239",
-//       "user_id": "671762da9ee45e870a42b098",
-//       "first_name": "shishpal",
-//       "last_name": "golu",
-//       "email": "goludon8851@gmail.com",
-//       "phone": "7895632145",
-//       "total_amount": 2999,
-//       "user_order_id": "ORD-#5479",
-//       "order_id": "order_PC1D1L7SQClSE2",
-//       "product_type": "event",
-//       "event_purchase": "671762f29ee45e870a42b0c1",  ===
-//       "start_date": "2024-11-01T00:00:00.000Z",
-//       "start_time": "2024-11-01T09:00:00.000Z"
-//   }
-// }

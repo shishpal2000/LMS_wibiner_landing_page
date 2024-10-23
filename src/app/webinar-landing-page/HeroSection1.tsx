@@ -79,15 +79,16 @@ const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
                     alt=""
                     className="w-6 md:w-10 lg:w-16 xl:w-28 object-cover mt-[2%]"
                   />
-                  {/*  */}
-                  <p className="hidden md:block text-gray-700 text-[11px] mm:text-xs md:text-sm lg:text-base xl:text-xl mt-[3%] font-semibold text-center md:text-start lg:pb-16 xl:pb-20">
+                
+                  <p className=" text-gray-700 text-[11px] mm:text-xs md:text-sm lg:text-base xl:text-xl mt-[3%] font-semibold text-center md:text-start lg:pb-16 xl:pb-20">
                     {item.title}
                     <br/>
-                    <p className="text-xl mb-2">₹ {item?.event_id.price.amount}</p>
+                    <p className=" text-xl mb-2">₹ {item?.event_id.price.amount}</p>
                   </p>
                 
                 </div>
-                <div className={` absolute bottom-0 left-0 w-full p-[5%] `}>
+               
+                <div className={`hidden md:block absolute bottom-0 left-0 w-full p-[5%] `}>
                   <div className="w-full bg-[#525FE1] flex px-[5%] py-[2%] lg:rounded-2xl xl:rounded-[32px] 2xl:rounded-[48px] 2xl:mt-10 justify-between items-center">
                     <div className="w-fit h-fit flex flex-col md:flex-row gap-4 md:gap-4 lg:gap-8 xl:gap-6 items-start md:items-center">
                       <div className="w-fit flex flex-col lg:gap-2 xl:gap-3 2xl:gap-5 px-4 md:px-6 lg:px-8 xl:pl-4 border-r-2 border-white">
@@ -116,7 +117,7 @@ const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
                       </div>
                     </div>
                     <Link
-                      href={`/loginpage?event_id=${item.event_id?._id}&price=${item.event_id?.price?.amount}&is_paid=${item.event_id?.is_paid}`}
+                      href={`/loginpage?event_id=${item.event_id?._id}&price=${item.event_id?.price?.amount}&is_paid=${item.event_id?.is_paid}&icon_url=${item.event_logo}`}
                       className="w-fit h-fit p-1.5 md:p-2 lg:p-2.5 xl:p-3 gap-3 md:gap-4 lg:gap-5 xl:gap-6 flex items-center rounded-full bg-white text-black justify-between"
                     >
                       <p className="ml-2 text-xs lg:text-base xl:text-xl 2xl:text-3xl font-medium">
@@ -126,6 +127,7 @@ const HeroSection1: React.FC<HeroSection1Props> = ({ data }) => {
                     </Link>
                   </div>
                 </div>
+               
                 <div className="hidden md:block w-[44%] overflow-hidden">
                   <img
                     src={item.image}

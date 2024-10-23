@@ -18,13 +18,27 @@ interface SyllabusCurriculumProps {
   title: string; // Title of the syllabus
   description: string; // Description of the syllabus
   detailed_description: DetailedDescription[]; // Detailed descriptions of sections
+  download_syllabus :string
 }
 
 const SyllabusCurriculum: React.FC<SyllabusCurriculumProps> = ({
   title,
   description,
   detailed_description,
+  download_syllabus
 }) => {
+
+  const handleDownload = (data:string) => {
+    const link = document.createElement("a");
+    link.href = data;
+    link.target = "_blank";
+    link.download = "Syllabus.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   return (
     <div className="container">
       <div className="w-full bg-gradient-to-tr from-purple-100 via-orange-100 to-purple-100 flex flex-col items-center gap-5 px-[5%] py-[10%] md:py-[5%] rounded-2xl">
@@ -39,7 +53,7 @@ const SyllabusCurriculum: React.FC<SyllabusCurriculumProps> = ({
             <SyllabusCard section={section} key={section._id} />
           ))}
         </div>
-        <button className="w-fit bg-[#525FE1] text-white rounded py-3 px-5 mt-3">
+        <button type="button" className="w-fit bg-[#525FE1] text-white rounded py-3 px-5 mt-3" onClick={()=>handleDownload(download_syllabus)}>
           Download Syllabus
         </button>
       </div>
