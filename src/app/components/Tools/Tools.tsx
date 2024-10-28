@@ -14,7 +14,7 @@ interface ToolsProps {
 const Tools: React.FC<ToolsProps> = ({ title, image }) => {
   // console.log("image", image);
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full flex flex-col gap-5 items-center">
         {title && ( // Render title only if it exists
           <p className="text-4xl md:text-5xl lg:text-6xl font-semibold">

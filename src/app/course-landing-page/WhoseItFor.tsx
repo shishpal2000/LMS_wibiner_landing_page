@@ -19,7 +19,7 @@ const WhoseItFor: React.FC<WhoseItForProps> = ({
     for_whom,
   });
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full bg-white flex flex-col gap-5 items-center">
         <p className="text-3xl lg:text-4xl xl:text-5xl font-semibold">
           {for_whom_title}

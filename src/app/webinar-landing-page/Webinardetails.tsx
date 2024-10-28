@@ -24,7 +24,7 @@ const Webinardetails: React.FC<WebinarDetailsProps> = ({
   const isStaticImage = typeof image !== "string";
 
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full bg-white flex flex-col gap-2 items-center">
         <p className="text-3xl lg:text-4xl xl:text-5xl font-semibold">
           {instructor_title_text}

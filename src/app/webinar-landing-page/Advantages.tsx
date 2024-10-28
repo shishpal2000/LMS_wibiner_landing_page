@@ -31,7 +31,7 @@ const Advantages: React.FC<AdvantagesProps> = ({
   ];
 
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full">
         <div className="w-full flex flex-col items-center gap-8">
           <p className="text-3xl lg:text-4xl xl:text-5xl font-semibold text-center">

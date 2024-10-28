@@ -30,7 +30,7 @@ const ElementaSchool: React.FC<ElementaSchoolProps> = ({
   //   feedbacks,
   // });
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full flex flex-col md:grid grid-cols-3 gap-4 bg-gradient-to-br from-purple-100 via-orange-100 to-purple-100 rounded-2xl px-[5%] py-[10%] md:py-[5%]">
         <div className="w-full h-full flex flex-col justify-center items-center md:items-start gap-5">
           <p className="text-3xl lg:text-3xl xl:text-4xl font-semibold text-center md:text-start">

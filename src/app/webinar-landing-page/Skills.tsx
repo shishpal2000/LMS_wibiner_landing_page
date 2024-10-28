@@ -8,7 +8,7 @@ interface SkillsProps {
 
 const Skills: React.FC<SkillsProps> = ({ title, tags }) => {
   return (
-    <div className="container">
+    <div className="container text-gray-700">
       <div className="w-full flex flex-col items-center gap-5">
         <p className="text-4xl md:text-5xl lg:text-6xl font-semibold">
           {title}

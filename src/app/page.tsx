@@ -1,4 +1,4 @@
-import Page from "./webinar-landing-page/page";
+import Page from "./webinar-landing-page/[slug]/page";
 
 export default function Home() {
   return (
