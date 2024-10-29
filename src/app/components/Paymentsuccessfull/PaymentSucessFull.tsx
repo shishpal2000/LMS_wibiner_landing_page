@@ -20,7 +20,7 @@ export default function PaymentSuccessPage() {
   useEffect(() => {
     const verifyPayment = async () => {
       // Only proceed if payment hasn't been verified yet
-      if (isVerified) return; 
+      if (isVerified) return;
 
       if (razorpay_payment_id && razorpay_order_id && razorpay_signature) {
         const payload = {
@@ -32,17 +32,23 @@ export default function PaymentSuccessPage() {
         };
 
         try {
-          const res = await postData("event/enroll/verify-event-enrollment", payload);
-          if (res?.success) { // Check for success
-            if (!notificationShown) {
+          const res = await postData(
+            "event/enroll/verify-event-enrollment",
+            payload
+          );
+          if (res?.success) {
+            if (notificationShown) {
               show_notification("Payment verified successfully!", "success");
-              setNotificationShown(true); // Mark notification as shown
+              setNotificationShown(true);
             }
             setIsVerified(true); // Mark as verified
             router.push("/"); // Redirect to a success page or dashboard
           } else {
             if (!notificationShown) {
-              show_notification("Payment verification failed: " + res?.message, "error");
+              show_notification(
+                "Payment verification failed: " + res?.message,
+                "error"
+              );
               setNotificationShown(true); // Mark notification as shown
             }
             router.push("/paymentFail");
@@ -65,7 +71,16 @@ export default function PaymentSuccessPage() {
     };
 
     verifyPayment();
-  }, [isVerified, razorpay_payment_id, razorpay_order_id, razorpay_signature, event_purchase_id, event_id, router, notificationShown]); // Ensure dependencies are correct
+  }, [
+    isVerified,
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature,
+    event_purchase_id,
+    event_id,
+    router,
+    notificationShown,
+  ]); // Ensure dependencies are correct
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
